@@ -1,0 +1,50 @@
+{{ define "title" }}URL Scaper | {{ .Link.Name }}{{ end }}
+
+{{ define "main" }}
+  {{ template "components/nav" . }}
+
+  <ol class="flex items-center max-w-5xl mx-auto px-4 my-6 text-sm">
+    <li class="text-sm font-medium text-gray-500 hover:text-gray-700">
+      <a href="/">Home</a>
+    </li>
+    <li class="flex items-center">
+      <svg class="flex-shrink-0 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+      </svg>
+      <div class="text-sm font-medium text-gray-700">{{ .Link.Name }}</div>
+    </li>
+  </ol>
+
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="bg-white rounded shadow-sm border border-gray-200 mb-4">
+      <h1 class="flex items-center font-bold text-md md:text-lg border-b border-gray-200 px-3 md:px-4 py-2 md:py-3">
+        <img class="h-5 w-5" src="{{ .Link.Favicon }}" alt="website favicon"/>
+        <span class="ml-2">{{ .Link.Name }}</span>
+      </h1>
+
+      <div class="md:flex p-3">
+        <div class="md:w-8/12 md:mr-4">
+          {{ if .Link.Screenshot }}
+            <h2 class="text-md font-medium mb-1.5">Last Screenshot</h2>
+            <p class="text-xs text-gray-500 mb-3">Taken {{ timeago .Link.LastChangeAt }}</p>
+            <img class="max-w-full w-full h-auto rounded border mb-4" src="/{{ .Link.Screenshot }}"/>
+          {{ else }}
+            <h2 class="text-md font-medium mb-1.5">No screenshot found</h2>
+            <p class="text-xs text-gray-500 mb-4">A screenshot of the page will be taken after the first change is detected.</p>
+          {{ end }}
+        </div>
+
+        <div class="md:w-4/12">
+          <h2 class="text-md font-medium mb-1.5">URL</h2>
+          <a href="{{ .Link.URL }}" class="block hover:underline text-xs text-gray-500 mb-8">{{ .Link.URL }}</a>
+
+          <h2 class="text-sm font-medium mb-1.5">Current hash</h2>
+          <p class="text-xs text-gray-500 font-mono mb-4">{{ .Link.Hash }}</p>
+
+          <p class="text-xs text-gray-500 mb-1">Created {{ timeago .Link.CreatedAt }}</p>
+          <p class="text-xs text-gray-500">Scraped {{ .Link.ScrapeCount}} {{ pluralize .Link.ScrapeCount "time" }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

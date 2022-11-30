@@ -1,0 +1,51 @@
+{{ define "title" }}URL Scaper | Home{{ end }}
+
+{{ define "main" }}
+  {{ template "components/nav" . }}
+
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="bg-white rounded shadow-sm border border-gray-200 mt-8">
+      <h1 class="flex items-center justify-between text-sm md:text-md border-b border-gray-200 px-3 md:px-4 py-2 md:py-3">
+        {{ with .User }}
+          <p class="font-bold">Links you're watching</p>
+          <button type="button" class="inline-flex items-center px-2.5 py-1 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            <a class="px-1" href="/links/new">Add link</a>
+          </button>
+        {{ else }}
+          <span class="text-gray-700">Hello! Click the button at the top right to access or create your account.</span>
+        {{ end }}
+      </h1>
+      {{ with .User }}
+        {{ with .Links }}
+          {{ range $i, $link := . }}
+            <div class="flex items-center justify-between border-b border-gray-50">
+              <a class="flex items-center p-3 hover:bg-gray-50 flex-1" href="/links/{{ $link.ID }}">
+                <div class="px-1">
+                  <img class="h-4 w-4" src="{{ $link.Favicon }}" alt="website favicon"/>
+                </div>
+                <div class="text-xs md:text-sm text-gray-500 font-medium ml-2">{{ .Name }}</div>
+              </a>
+              <div class="flex items-center px-3">
+                <div class="flex-shrink-0 text-xs font-light text-gray-500">
+                  {{ timeago $link.LastChangeAt }}
+                </div>
+                <form class="flex items-center ml-4 sm:ml-8" action="/links/{{ $link.ID }}/destroy" method="POST">
+                  <button class="font-light text-gray-300 hover:bg-red-50 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </form>
+              </div>
+            </div>
+          {{ end }}
+        {{ else }}
+          <p class="text-xs md:text-sm px-3 md:px-4 py-2 md:py-3 text-gray-500">You're not watching any links. Click the new button above to get started.</p>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+{{ end }}

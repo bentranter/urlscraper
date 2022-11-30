@@ -1,0 +1,53 @@
+{{ define "title" }}URL Scaper | New Link{{ end }}
+
+{{ define "main" }}
+  {{ template "components/nav" . }}
+
+  <ol class="flex items-center max-w-5xl mx-auto px-4 my-6 text-sm">
+    <li class="text-sm font-medium text-gray-500 hover:text-gray-700">
+      <a href="/">Home</a>
+    </li>
+    <li class="flex items-center">
+      <svg class="flex-shrink-0 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+      </svg>
+      <div class="text-sm font-medium text-gray-700">New</div>
+    </li>
+  </ol>
+
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="bg-white rounded shadow-sm border border-gray-200 mt-8">
+      <h1 class="font-bold text-sm md:text-md border-b border-gray-200 px-3 md:px-4 py-2 md:py-3">
+        Add a new link
+      </h1>
+
+      <form class="px-3 md:px-4 py-2 md:py-3 text-gray-500" method="POST" action="/links">
+        <div class="mt-4">
+          <label for="name" class="block text-sm text-gray-700">Nickname</label>
+          <div class="mt-1">
+            <input type="text" name="name" id="name" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full border-gray-300 rounded" placeholder="Google">
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <label for="url" class="block text-sm text-gray-700">URL</label>
+          <div class="mt-1 relative rounded shadow-sm">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-gray-300 sm:text-sm">
+                https://
+              </span>
+            </div>
+            <input type="text" name="url" id="url" class="focus:ring-green-500 focus:border-green-500 block w-full pl-16 sm:pl-14 sm:text-sm border-gray-300 rounded" placeholder="google.com">
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <button type="submit" class="group w-full flex justify-center py-2 px-4 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            <span class="group-disabled:hidden">Add link</span>
+            <span class="hidden group-disabled:inline">Adding...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{{ end }}
