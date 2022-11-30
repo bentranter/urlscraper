@@ -35,11 +35,11 @@ func init() {
 	if s := os.Getenv("DSN"); s != "" {
 		dsn = s
 	}
+	log.Info().Str("dsn", dsn).Msg("connecting to database")
 
 	pgdb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 
 	// Create a Bun db on top of it.
-	log.Info().Str("dsn", dsn).Msg("connecting to database")
 	db = bun.NewDB(pgdb, pgdialect.New())
 
 	// Print all queries to stdout.
